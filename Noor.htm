@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>نور</title><meta name="theme-color" content="#0f172a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="نور"><style>*{-webkit-tap-highlight-color:transparent;outline:0}body{font-family:system-ui,sans-serif;direction:rtl;margin:0;background:linear-gradient(135deg,#0f172a,#1e1b4b,#0f172a);color:#e2e8f0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:12px}@supports(padding:max(0px)){body{padding-top:max(16px,env(safe-area-inset-top));padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));padding-bottom:max(16px,env(safe-area-inset-bottom))}}.main-grid{max-width:72rem;width:100%;display:grid;grid-template-columns:1fr;gap:16px}@media(min-width:768px){.main-grid{grid-template-columns:1fr 1fr;gap:24px}}@media(min-width:1024px){.main-grid{grid-template-columns:repeat(12,1fr);gap:24px}}.panel{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative}@media(min-width:640px){.panel{padding:24px}}.prayer-card{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.05);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.05);transition:all .2s}@media(min-width:640px){.prayer-card{padding:14px}}.prayer-card.active{background:rgba(20,184,166,.2);border-color:rgba(45,212,191,.6);box-shadow:0 0 20px rgba(20,184,166,.2);transform:scale(1.01)}.prayer-card.active span:first-child{color:#2dd4bf;font-weight:700}.circle-container{width:340px;height:340px;position:relative}@media(min-width:640px){.circle-container{width:378px;height:378px}}.prayer-time{font-family:monospace;font-size:1.1rem}.digital-clock{font-family:monospace;font-weight:900;color:#5eead4;text-shadow:0 0 12px rgba(45,212,191,.15)}.countdown-timer{font-family:monospace;font-weight:700;color:#6ee7b7}.gradient-text{background:linear-gradient(to right,#2dd4bf,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent}button:active{opacity:.7;transform:scale(.97)}.cal-day{padding:6px 2px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:monospace;font-size:.85rem;border:1px solid transparent}@media(min-width:640px){.cal-day{font-size:.9rem;padding:8px 2px}}.cal-day.today{background:linear-gradient(135deg,#14b8a6,#10b981);color:#0f172a;font-weight:700;transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.3);border:none}.cal-day.normal{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.05);color:#e2e8f0}.cal-day.special-sorrow{border-bottom:3px solid #f87171}.cal-day.special-joy{border-bottom:3px solid #34d399}.small-text{font-size:.75rem;color:#94a3b8}.compass-icon-btn{position:absolute;top:12px;right:12px;background:rgba(59,130,246,.15);border:1px solid rgba(96,165,250,.2);color:#93c5fd;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;z-index:5;transition:all .2s}.compass-icon-btn:hover{background:rgba(59,130,246,.25)}.compass-modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;direction:rtl}.compass-modal{background:rgba(15,23,42,.95);border:1px solid rgba(45,212,191,.3);border-radius:30px;padding:24px;text-align:center;max-width:320px;width:90%;box-shadow:0 20px 40px rgba(0,0,0,.6)}.compass-large-circle{width:220px;height:220px;margin:0 auto;position:relative;border-radius:50%;background:rgba(255,255,255,.02);border:2px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center}.compass-north-needle,.compass-qibla-needle{position:absolute;transform-origin:bottom center;transition:transform .2s ease}.compass-north-needle{width:3px;height:90px;background:linear-gradient(to top,#60a5fa,#2563eb);border-radius:2px;bottom:50%;left:calc(50% - 1.5px)}.compass-qibla-needle{width:4px;height:85px;background:linear-gradient(to top,#f87171,#ef4444);border-radius:2px;bottom:50%;left:calc(50% - 2px);z-index:2}.compass-center-dot{width:12px;height:12px;background:white;border-radius:50%;position:absolute;z-index:3}.compass-close-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:white;padding:8px 24px;border-radius:20px;margin-top:20px;font-size:.9rem;cursor:pointer}.qibla-info{color:#93c5fd;font-size:.85rem;margin:10px 0;direction:ltr;display:flex;justify-content:center;gap:20px;font-family:monospace}</style></head><body><div class="main-grid"><div style="grid-column:span 6" class="panel"><div class="compass-icon-btn" id="compassIcon" title="البوصلة">🧭</div><div style="text-align:center;margin-bottom:16px"><h1 class="gradient-text" style="font-size:2rem;font-weight:800">نُور</h1><div style="display:flex;justify-content:center;align-items:center;gap:8px;direction:ltr;margin-top:4px"><button id="rl" style="font-size:.65rem;background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.2);color:#2dd4bf;border-radius:4px;padding:2px 8px">SYNC</button><span id="ld" style="font-size:.75rem;color:#94a3b8;max-width:180px;overflow:hidden;white-space:nowrap">القطيف</span><span style="color:#2dd4bf">📍</span></div><div style="margin:8px 0"><div id="clk" class="digital-clock" style="font-size:2.5rem"></div></div><div id="dt" class="small-text"></div></div><div style="display:flex;flex-direction:column;gap:8px"><div id="pf" class="prayer-card"><span>🌙 الفجر</span><span class="prayer-time" id="tf">--:--</span></div><div id="ps" class="prayer-card" style="opacity:.4"><span>☀️ الشروق</span><span class="prayer-time" id="ts">--:--</span></div><div id="pd" class="prayer-card"><span>🌞 الظهر</span><span class="prayer-time" id="td">--:--</span></div><div id="pa" class="prayer-card"><span>⛅ العصر</span><span class="prayer-time" id="ta">--:--</span></div><div id="pm" class="prayer-card"><span>🌅 المغرب</span><span class="prayer-time" id="tm">--:--</span></div><div id="pi" class="prayer-card"><span>🌙 العشاء</span><span class="prayer-time" id="ti">--:--</span></div></div><div style="margin-top:12px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px"><button id="abtn" style="width:100%;padding:12px;border-radius:12px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#fcd34d;font-size:.8rem;letter-spacing:.05em"><span id="aic">🔔</span> <span id="atx">تفعيل التنبيهات الصوتية</span></button></div></div><div style="grid-column:span 6;display:flex;flex-direction:column;gap:16px"><div class="panel" style="display:flex;align-items:center;justify-content:center;min-height:360px"><div class="circle-container"><svg width="100%" height="100%" viewBox="0 0 378 378"><circle cx="189" cy="189" r="170" stroke="rgba(255,255,255,.03)" stroke-width="12" fill="transparent"/><circle id="arc" cx="189" cy="189" r="170" stroke="url(#g)" stroke-width="10" stroke-linecap="round" fill="transparent" stroke-dasharray="1068" stroke-dashoffset="0" transform="rotate(-90 189 189)"/><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#10b981"/></linearGradient></defs></svg><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center"><span style="font-size:.7rem;color:#2dd4bf;font-weight:600;letter-spacing:.1em">الصلاة القادمة</span><h2 id="cn" style="font-size:1.8rem;color:#fff;margin:6px 0">--</h2><div id="ct" class="countdown-timer" style="font-size:2.2rem">00:00:00</div><span style="font-size:.65rem;color:#94a3b8;margin-top:4px">الوقت المتبقي</span></div></div></div><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:12px;margin-bottom:12px"><button id="pmb" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#cbd5e1;padding:4px 12px;border-radius:8px">&gt;</button><div style="text-align:center"><h3 id="cmn" style="font-size:1.2rem;color:#2dd4bf;font-weight:700">--</h3><p id="cgr" style="font-size:.7rem;color:#94a3b8;margin-top:2px"></p></div><button id="nmb" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#cbd5e1;padding:4px 12px;border-radius:8px">&lt;</button></div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:.8rem;color:#94a3b8;margin-bottom:8px"><div>ح</div><div>ن</div><div>ث</div><div>ر</div><div>خ</div><div>ج</div><div>س</div></div><div id="cdg" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center"></div><div style="margin-top:12px;background:rgba(20,184,166,.05);border:1px solid rgba(20,184,166,.1);border-radius:12px;padding:12px"><div style="font-size:.8rem;color:#2dd4bf;display:flex;align-items:center;gap:6px"><span>📅</span> التاريخ الهجري اليوم:</div><p id="thj" style="font-size:.95rem;color:#fff;margin-top:4px;font-weight:600">--</p></div></div></div></div><div id="compassModal" style="display:none" class="compass-modal-overlay"><div class="compass-modal"><div class="compass-large-circle"><div class="compass-north-needle" id="northNeedle"></div><div class="compass-qibla-needle" id="qiblaNeedle"></div><div class="compass-center-dot"></div></div><div class="qibla-info"><span id="qiblaDegrees">--°</span> <span id="headingDegrees">--°</span></div><button class="compass-close-btn" id="closeCompass">إغلاق</button></div></div><script>
+var SPE=(function(){function r(d){return d*Math.PI/180}function d(r){return r*180/Math.PI}function w(x){return x-360*Math.floor(x/360)}return{calc:function(la,lo,tz,D){var y=D.getFullYear(),m=D.getMonth()+1,dd=D.getDate();if(m<=2){y--;m+=12}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);var jd=Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+dd+B-1524.5;var D2=jd-2451545;var g=w(357.529+0.98560028*D2),q=w(280.459+0.98564736*D2);var L=w(q+1.915*Math.sin(r(g))+0.020*Math.sin(r(2*g)));var e=23.439-0.00000036*D2;var RA=d(Math.atan2(Math.cos(r(e))*Math.sin(r(L)),Math.cos(r(L))))/15;if(RA<0)RA+=24;var dec=d(Math.asin(Math.sin(r(e))*Math.sin(r(L))));var EqT=q/15-RA;var mid=12+tz-lo/15-EqT;if(mid<0)mid+=24;if(mid>24)mid-=24;function aD(a){var num=-Math.sin(r(a))-Math.sin(r(la))*Math.sin(r(dec));var den=Math.cos(r(la))*Math.cos(r(dec));var cosH=num/den;if(cosH>1||cosH<-1)return null;return d(Math.acos(cosH))/15}function asrD(){var len=1+Math.tan(r(Math.abs(la-dec)));var num=Math.sin(Math.atan(1/len))-Math.sin(r(la))*Math.sin(r(dec));var den=Math.cos(r(la))*Math.cos(r(dec));var cosH=num/den;if(cosH>1||cosH<-1)return null;return d(Math.acos(cosH))/15}var fH=aD(16),sH=aD(0.833),aH=asrD(),mH=aD(4),iH=aD(14);var T={fajr:mid-fH,sunrise:mid-sH,dhuhr:mid,asr:mid+aH,maghrib:mid+mH,isha:mid+iH};var res={};Object.keys(T).forEach(function(k){var base=new Date(D.getTime());base.setHours(0,0,0,0);res[k]=new Date(base.getTime()+T[k]*3600000)});return res}}})();
+var SCE=(function(){var M=["محرّم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوّال","ذو القعدة","ذو الحجة"];function g2j(y,m,d){if(m<=2){y--;m+=12}var A=Math.floor(y/100),B=Math.floor(A/4),C=2-A+B;return C+d+Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))-1524.5}function j2h(jd){var z=Math.floor(jd+0.5),c=Math.floor((z-1948439.5)/10631),rem=(z-1948439.5)-c*10631;var yc=Math.floor((rem*30+11)/10631),yr=rem-Math.floor((yc*10631+14)/30);var y=c*30+yc+1,m=Math.floor((yr*11+330)/325),d=Math.floor(yr-Math.floor((m*325-320)/11)+0.5);if(d===0){d=30;m--}if(m===0){m=12;y--}return{hYear:y,hMonth:m,hDay:d}}return{hijri:function(d){return j2h(g2j(d.getFullYear(),d.getMonth()+1,d.getDate()))},monthName:function(i){return M[i-1]||""},daysInMonth:function(y,m){if(m===12)return((y*11+14)%30)<11?30:29;return m%2===1?30:29},h2g:function(y,m,d){var c=Math.floor((y-1)/30),yc=(y-1)%30;var jd=1948439.5+c*10631+Math.floor((yc*10631+14)/30)+Math.floor((m*325-320)/11)+d;var j=Math.floor(jd+0.5),w=Math.floor((j-1867216.25)/36524.25),x=Math.floor(w/4),b=j+1+w-x,c2=b+1524;var dy=Math.floor((c2-122.1)/365.25),e=Math.floor(365.25*dy),g=Math.floor((c2-e)/30.6001);var day=c2-e-Math.floor(30.6001*g),month=g<14?g-1:g-13,year=month>2?dy-4716:dy-4715;return new Date(year,month-1,day)}}})();
+var sDays=[{m:1,d:10,t:"sorrow"},{m:2,d:20,t:"sorrow"},{m:2,d:28,t:"sorrow"},{m:3,d:12,t:"joy"},{m:7,d:13,t:"joy"},{m:8,d:15,t:"joy"},{m:9,d:21,t:"sorrow"},{m:10,d:1,t:"joy"},{m:12,d:10,t:"joy"},{m:12,d:18,t:"joy"}];
+(function(){
+var ld=document.getElementById("ld"),clk=document.getElementById("clk"),dt=document.getElementById("dt"),cn=document.getElementById("cn"),ct=document.getElementById("ct"),arc=document.getElementById("arc"),ab=document.getElementById("abtn"),aic=document.getElementById("aic"),atx=document.getElementById("atx"),cmn=document.getElementById("cmn"),cgr=document.getElementById("cgr"),cdg=document.getElementById("cdg"),thj=document.getElementById("thj"),pmb=document.getElementById("pmb"),nmb=document.getElementById("nmb"),rl=document.getElementById("rl");
+var compassIcon = document.getElementById("compassIcon");
+var compassModal = document.getElementById("compassModal");
+var northNeedle = document.getElementById("northNeedle");
+var qiblaNeedle = document.getElementById("qiblaNeedle");
+var qiblaDegSpan = document.getElementById("qiblaDegrees");
+var headingDegSpan = document.getElementById("headingDegrees");
+var closeCompassBtn = document.getElementById("closeCompass");
+
+var pc={fajr:document.getElementById("pf"),sunrise:document.getElementById("ps"),dhuhr:document.getElementById("pd"),asr:document.getElementById("pa"),maghrib:document.getElementById("pm"),isha:document.getElementById("pi")};
+var te={fajr:document.getElementById("tf"),sunrise:document.getElementById("ts"),dhuhr:document.getElementById("td"),asr:document.getElementById("ta"),maghrib:document.getElementById("tm"),isha:document.getElementById("ti")};
+var lat=26.5258,lng=49.9981,locName="القطيف";
+if(localStorage.getItem("shia_lat_v6")){lat=parseFloat(localStorage.getItem("shia_lat_v6"));lng=parseFloat(localStorage.getItem("shia_lng_v6"));locName=localStorage.getItem("shia_lbl_v6")||"القطيف";}
+ld.textContent=locName;
+var aCtx=null,aArm=false,lastTrig="",initTrig=false;
+var calY=1447,calM=1;
+
+function toRad(d){return d*Math.PI/180}
+function toDeg(r){return r*180/Math.PI}
+function qiblaDirection(lat1,lon1,lat2,lon2){
+ var dLon = toRad(lon2 - lon1);
+ var y = Math.sin(dLon);
+ var x = Math.cos(toRad(lat1))*Math.tan(toRad(lat2)) - Math.sin(toRad(lat1))*Math.cos(dLon);
+ return toDeg(Math.atan2(y,x));
+}
+var KAABA_LAT = 21.4225, KAABA_LON = 39.8262;
+var qiblaDeg = qiblaDirection(lat,lng,KAABA_LAT,KAABA_LON);
+if(qiblaDeg<0) qiblaDeg+=360;
+
+var compassActive = false, currentHeading = 0;
+var orientListener = null;
+
+function updateCompassUI(){
+ if(!compassActive) return;
+ var qiblaNeedleDeg = qiblaDeg - currentHeading;
+ if(qiblaNeedleDeg < 0) qiblaNeedleDeg += 360;
+ var northNeedleDeg = 360 - currentHeading;
+ northNeedle.style.transform = 'rotate('+northNeedleDeg+'deg)';
+ qiblaNeedle.style.transform = 'rotate('+qiblaNeedleDeg+'deg)';
+ qiblaDegSpan.textContent = 'القبلة '+Math.round(qiblaDeg)+'°';
+ headingDegSpan.textContent = 'الشمال '+Math.round(currentHeading)+'°';
+}
+
+function startCompassListeners(){
+ if(typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function'){
+  DeviceOrientationEvent.requestPermission().then(state => {
+   if(state==='granted') addOrientationListener();
+  }).catch(e=>console.log(e));
+ } else {
+  addOrientationListener();
+ }
+}
+
+function addOrientationListener(){
+ orientListener = function(e){
+  if(e.webkitCompassHeading !== undefined){
+   currentHeading = e.webkitCompassHeading;
+  } else if(e.alpha !== null){
+   currentHeading = 360 - e.alpha;
+  }
+  updateCompassUI();
+ };
+ window.addEventListener('deviceorientation', orientListener, true);
+ compassActive = true;
+ updateCompassUI();
+}
+
+function stopCompassListeners(){
+ if(orientListener){
+  window.removeEventListener('deviceorientation', orientListener, true);
+  orientListener = null;
+ }
+ compassActive = false;
+}
+
+compassIcon.onclick = function(){
+ compassModal.style.display = 'flex';
+ if(!compassActive){
+  startCompassListeners();
+ }
+}
+
+closeCompassBtn.onclick = function(){
+ compassModal.style.display = 'none';
+ stopCompassListeners();
+}
+compassModal.addEventListener('click',function(e){if(e.target===compassModal) closeCompassBtn.click();});
+
+function uc(){var n=new Date();clk.textContent=n.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true});dt.textContent=n.toLocaleDateString("ar-SA",{weekday:"long",year:"numeric",month:"long",day:"numeric"});}
+function ft(d){return d&&!isNaN(d.getTime())?d.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",hour12:true}):"--:--";}
+ab.onclick=function(){if(aArm)return;try{var AC=window.AudioContext||window.webkitAudioContext;aCtx=new AC();var b=aCtx.createBuffer(1,1,22050),s=aCtx.createBufferSource();s.buffer=b;s.connect(aCtx.destination);s.start(0);aArm=true;ab.innerHTML="<span>✅</span> <span>التنبيهات مفعلة</span>";ab.style.background="rgba(16,185,129,0.1)";ab.style.borderColor="rgba(16,185,129,0.3)";ab.style.color="#6ee7b7";}catch(e){}}
+function chime(){if(!aArm||!aCtx)return;var t=aCtx.currentTime;[523.25,659.25,783.99,1046.5].forEach(function(f,i){var o=aCtx.createOscillator(),g=aCtx.createGain();o.type="sine";o.frequency.setValueAtTime(f,t+i*0.12);g.gain.setValueAtTime(0.2,t+i*0.12);g.gain.exponentialRampToValueAtTime(0.001,t+i*0.12+0.5);o.connect(g);g.connect(aCtx.destination);o.start(t+i*0.12);o.stop(t+i*0.12+0.5);});}
+function rp(){var n=new Date();var tz=-n.getTimezoneOffset()/60;var p=SPE.calc(lat,lng,tz,n);Object.keys(te).forEach(function(k){te[k].textContent=ft(p[k]);});var now=n.getTime();var cur="isha",prev=p.isha,nx="fajr",nxL="الفجر";if(now>=p.fajr.getTime()&&now<p.sunrise.getTime()){cur="fajr";prev=p.fajr;nx="sunrise";nxL="الشروق";}else if(now>=p.sunrise.getTime()&&now<p.dhuhr.getTime()){cur="sunrise";prev=p.sunrise;nx="dhuhr";nxL="الظهر";}else if(now>=p.dhuhr.getTime()&&now<p.asr.getTime()){cur="dhuhr";prev=p.dhuhr;nx="asr";nxL="العصر";}else if(now>=p.asr.getTime()&&now<p.maghrib.getTime()){cur="asr";prev=p.asr;nx="maghrib";nxL="المغرب";}else if(now>=p.maghrib.getTime()&&now<p.isha.getTime()){cur="maghrib";prev=p.maghrib;nx="isha";nxL="العشاء";}
+Object.values(pc).forEach(function(c){c.classList.remove("active");});if(pc[cur])pc[cur].classList.add("active");if(cur!=="sunrise"&&(!initTrig||cur!==lastTrig)){chime();initTrig=true;}lastTrig=cur;cn.textContent=nxL;var tN=p[nx];if(nx==="fajr"&&now>=p.isha.getTime()){var tom=new Date();tom.setDate(tom.getDate()+1);tN=SPE.calc(lat,lng,tz,tom).fajr;}var diff=tN.getTime()-now;if(diff>0){var sec=Math.floor(diff/1000);ct.textContent=String(Math.floor(sec/3600)).padStart(2,"0")+":"+String(Math.floor((sec%3600)/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0");var tw=tN.getTime()-prev.getTime();if(tw>0){var pct=diff/tw;arc.style.transition="none";arc.setAttribute("stroke-dashoffset",1068*(1-pct));void arc.offsetWidth;arc.style.transition="stroke-dashoffset 1s linear";}}else{ct.textContent="00:00:00";arc.setAttribute("stroke-dashoffset","1068");}}
+function rc(){cmn.textContent=SCE.monthName(calM)+" "+calY+" هـ";var fg=SCE.h2g(calY,calM,1);var dim=SCE.daysInMonth(calY,calM);var lg=SCE.h2g(calY,calM,dim);cgr.textContent=fg.toLocaleDateString("ar-SA",{month:"short"})+" "+fg.getFullYear()+" - "+lg.toLocaleDateString("ar-SA",{month:"short"})+" "+lg.getFullYear();cdg.innerHTML="";var sd=fg.getDay();for(var i=0;i<sd;i++){cdg.appendChild(document.createElement("div"));}var tH=SCE.hijri(new Date());for(var d=1;d<=dim;d++){var cell=document.createElement("div");cell.textContent=d;var cls="cal-day ";if(d===tH.hDay&&calM===tH.hMonth&&calY===tH.hYear)cls+="today";else cls+="normal";for(var s=0;s<sDays.length;s++){if(sDays[s].m===calM&&sDays[s].d===d){cls+=sDays[s].t==="sorrow"?" special-sorrow":" special-joy";}}cell.className=cls;cdg.appendChild(cell);}}
+function ua(){uc();rp();var tH=SCE.hijri(new Date());thj.textContent=tH.hDay+" "+SCE.monthName(tH.hMonth)+" "+tH.hYear+" هـ";if(calY===0){calY=tH.hYear;calM=tH.hMonth;}rc();}
+function sv(la,lo,lb){lat=la;lng=lo;locName=lb;ld.textContent=lb;qiblaDeg = qiblaDirection(lat,lng,KAABA_LAT,KAABA_LON); if(qiblaDeg<0) qiblaDeg+=360; localStorage.setItem("shia_lat_v6",lat);localStorage.setItem("shia_lng_v6",lng);localStorage.setItem("shia_lbl_v6",lb);rp();}
+pmb.onclick=function(){calM--;if(calM<1){calM=12;calY--;}rc();};
+nmb.onclick=function(){calM++;if(calM>12){calM=1;calY++;}rc();};
+rl.onclick=function(){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(function(pos){sv(pos.coords.latitude,pos.coords.longitude,"GPS ("+pos.coords.latitude.toFixed(2)+","+pos.coords.longitude.toFixed(2)+")");},function(){alert("الرجاء تفعيل خدمة الموقع.");});}};
+setInterval(function(){uc();rp();},1000);
+document.addEventListener("visibilitychange",function(){if(!document.hidden)rp();});
+ua();
+if(navigator.geolocation){setInterval(function(){navigator.geolocation.getCurrentPosition(function(pos){sv(pos.coords.latitude,pos.coords.longitude,"GPS");},function(){},{enableHighAccuracy:false,timeout:3000});},300000);}
+})();
+</script></body></html>
