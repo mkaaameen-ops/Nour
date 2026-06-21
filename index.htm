@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Phone Pro - Universal</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        }
+
+        /* ===== PHONE CONTAINER — fills any screen ===== */
+        .iphone {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh; /* dynamic viewport height for mobile */
+            max-width: 100%;
+            margin: 0 auto;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== STATUS BAR ===== */
+        .status-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: clamp(44px, 6vh, 60px);
+            background: transparent;
+            z-index: 100;
+            padding: clamp(8px, 1.5vh, 14px) clamp(12px, 3vw, 24px);
+            display: flex;
+            justify-content: space-between;
+            font-size: clamp(13px, 2.2vw, 17px);
+            font-weight: 590;
+            color: white;
+            pointer-events: none;
+        }
+
+        /* ===== DYNAMIC ISLAND ===== */
+        .dynamic-island {
+            position: absolute;
+            top: clamp(8px, 1.2vh, 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(90px, 20vw, 126px);
+            height: clamp(28px, 4vh, 36px);
+            background: #111;
+            border-radius: 28px;
+            z-index: 101;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== MAIN APP ===== */
+        .phone-app {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1c1c1e 0%, #0c0c0e 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding-bottom: clamp(60px, 12vh, 100px);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .phone-app.slide-up {
+            transform: translateY(-100%);
+        }
+
+        /* ===== KEYPAD, RECENTS, CONTACTS ===== */
+        .keypad-screen,
+        .recents-screen,
+        .contacts-screen {
+            padding: clamp(70px, 14vh, 110px) clamp(16px, 4vw, 32px) clamp(80px, 16vh, 140px);
+            min-height: 100%;
+            width: 100%;
+        }
+
+        .recents-screen,
+        .contacts-screen {
+            padding-top: clamp(60px, 10vh, 100px);
+        }
+
+        /* ===== NUMBER DISPLAY ===== */
+        .number-display {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: clamp(14px, 2.5vh, 24px) clamp(16px, 3vw, 28px);
+            margin-bottom: clamp(20px, 4vh, 36px);
+            text-align: center;
+        }
+
+        .entered-number {
+            font-size: clamp(28px, 6vw, 46px);
+            font-weight: 500;
+            color: white;
+            letter-spacing: 2px;
+            font-family: monospace;
+            word-break: break-all;
+            min-height: 1.2em;
+        }
+
+        .contact-hint {
+            font-size: clamp(12px, 1.8vw, 16px);
+            color: #8e8e93;
+            margin-top: 6px;
+        }
+
+        /* ===== KEYPAD GRID ===== */
+        .keypad-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(10px, 2.5vw, 24px);
+            margin-bottom: clamp(20px, 4vh, 36px);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .key {
+            aspect-ratio: 1 / 1;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.05s linear;
+            touch-action: manipulation;
+            min-height: clamp(44px, 10vw, 80px);
+            min-width: clamp(44px, 10vw, 80px);
+        }
+
+        .key:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .key-number {
+            font-size: clamp(26px, 5.5vw, 40px);
+            font-weight: 400;
+            color: white;
+            line-height: 1;
+        }
+
+        .key-letters {
+            font-size: clamp(7px, 1.2vw, 11px);
+            color: #8e8e93;
+            letter-spacing: 1px;
+            margin-top: 1px;
+        }
+
+        /* ===== CALL BUTTON ===== */
+        .call-button {
+            background: #34c759;
+            margin: 0 auto;
+            width: clamp(56px, 12vw, 80px);
+            height: clamp(56px, 12vw, 80px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            touch-action: manipulation;
+        }
+
+        .call-button:active {
+            transform: scale(0.92);
+            background: #2db34f;
+        }
+
+        .call-button span {
+            font-size: clamp(24px, 5vw, 36px);
+        }
+
+        .call-btn-wrap {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(28, 28, 30, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            padding: clamp(4px, 0.8vh, 8px) clamp(12px, 4vw, 32px) clamp(12px, 2.5vh, 24px);
+            gap: clamp(16px, 6vw, 48px);
+            justify-content: center;
+            z-index: 102;
+            touch-action: manipulation;
+        }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.2s ease;
+            touch-action: manipulation;
+            padding: 4px 8px;
+        }
+
+        .tab.active {
+            opacity: 1;
+        }
+
+        .tab-icon {
+            font-size: clamp(18px, 3.5vw, 26px);
+        }
+
+        .tab-label {
+            font-size: clamp(8px, 1.3vw, 11px);
+            font-weight: 500;
+            color: white;
+        }
+
+        /* ===== RECENTS & CONTACTS LIST ===== */
+        .recents-header,
+        .contacts-header {
+            color: white;
+            font-size: clamp(26px, 5vw, 36px);
+            font-weight: 700;
+            margin-bottom: clamp(12px, 2vh, 24px);
+            letter-spacing: -0.5px;
+        }
+
+        .recent-item,
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: clamp(10px, 1.8vh, 16px) 0;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            touch-action: manipulation;
+            gap: 8px;
+        }
+
+        .recent-info,
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: clamp(10px, 2vw, 16px);
+            flex: 1;
+            min-width: 0;
+        }
+
+        .recent-avatar,
+        .contact-avatar {
+            width: clamp(36px, 7vw, 52px);
+            height: clamp(36px, 7vw, 52px);
+            background: linear-gradient(135deg, #2c2c2e, #1c1c1e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(18px, 3.5vw, 26px);
+            flex-shrink: 0;
+        }
+
+        .recent-name,
+        .contact-name {
+            color: white;
+            font-size: clamp(14px, 2.2vw, 18px);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .recent-number,
+        .contact-number {
+            color: #8e8e93;
+            font-size: clamp(11px, 1.6vw, 14px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .recent-time {
+            color: #8e8e93;
+            font-size: clamp(11px, 1.5vw, 14px);
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+
+        /* ===== AUDIO PANEL (inside recents) ===== */
+        .audio-settings-panel {
+            margin-top: clamp(20px, 4vh, 40px);
+            background: rgba(30, 30, 35, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: clamp(20px, 3vw, 28px);
+            padding: clamp(14px, 2vh, 20px) clamp(14px, 2.5vw, 22px);
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .audio-title {
+            color: white;
+            font-size: clamp(14px, 2vw, 18px);
+            font-weight: 600;
+            margin-bottom: clamp(10px, 1.5vh, 16px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: clamp(6px, 1vw, 14px);
+            flex-wrap: wrap;
+            margin-bottom: clamp(8px, 1.2vh, 14px);
+        }
+
+        .file-label {
+            background: rgba(120, 120, 128, 0.2);
+            padding: clamp(6px, 1vh, 10px) clamp(10px, 1.8vw, 16px);
+            border-radius: 30px;
+            color: white;
+            font-size: clamp(11px, 1.5vw, 14px);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            justify-content: center;
+            min-width: 80px;
+            touch-action: manipulation;
+            border: 0.5px solid rgba(255,255,255,0.06);
+        }
+
+        .file-label input {
+            display: none;
+        }
+
+        .file-name {
+            color: #8e8e93;
+            font-size: clamp(10px, 1.2vw, 12px);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3px 10px;
+            border-radius: 20px;
+            max-width: clamp(80px, 20vw, 160px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .test-btn {
+            background: #0a84ff;
+            border: none;
+            color: white;
+            padding: clamp(5px, 0.8vh, 8px) clamp(10px, 1.8vw, 16px);
+            border-radius: 30px;
+            font-size: clamp(10px, 1.3vw, 13px);
+            cursor: pointer;
+            touch-action: manipulation;
+            font-weight: 500;
+        }
+
+        .reset-btn {
+            background: #ff3b30;
+        }
+
+        .audio-hint {
+            font-size: clamp(9px, 1.1vw, 12px);
+            color: #8e8e93;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* ===== CALL SCREEN ===== */
+        .call-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+            z-index: 200;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .call-screen.active {
+            transform: translateY(0);
+        }
+
+        .call-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            padding: clamp(60px, 12vh, 110px) clamp(16px, 4vw, 32px) clamp(30px, 6vh, 60px);
+        }
+
+        .call-avatar {
+            width: clamp(90px, 22vw, 150px);
+            height: clamp(90px, 22vw, 150px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3a3a3e, #2a2a2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+            flex-shrink: 0;
+        }
+
+        .call-avatar span {
+            font-size: clamp(40px, 10vw, 76px);
+        }
+
+        .call-name {
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-top: clamp(12px, 2vh, 24px);
+        }
+
+        .call-status {
+            font-size: clamp(14px, 2vw, 18px);
+            color: #34c759;
+            margin-top: clamp(4px, 0.8vh, 10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .call-status-dot {
+            width: clamp(6px, 1vw, 10px);
+            height: clamp(6px, 1vw, 10px);
+            background: #34c759;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        .call-buttons {
+            display: flex;
+            gap: clamp(16px, 4vw, 30px);
+            justify-content: center;
+            margin-top: clamp(20px, 4vh, 48px);
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .call-btn {
+            width: clamp(54px, 11vw, 76px);
+            height: clamp(54px, 11vw, 76px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            font-size: clamp(24px, 5vw, 36px);
+            touch-action: manipulation;
+            border: none;
+        }
+
+        .call-btn:active {
+            transform: scale(0.92);
+        }
+
+        .decline-call {
+            background: #ff3b30;
+            color: white;
+        }
+
+        .accept-call {
+            background: #34c759;
+            color: white;
+        }
+
+        /* ===== ACTIVE CALL CONTROLS ===== */
+        .active-call-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(10px, 2vw, 18px);
+            margin-bottom: clamp(12px, 2vh, 24px);
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .active-control {
+            background: rgba(120, 120, 128, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: clamp(10px, 1.8vh, 16px) clamp(6px, 1vw, 12px);
+            text-align: center;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: background 0.1s;
+        }
+
+        .active-control:active {
+            background: rgba(120, 120, 128, 0.35);
+        }
+
+        .active-control div:first-child {
+            font-size: clamp(20px, 4vw, 28px);
+        }
+
+        .active-control div:last-child {
+            font-size: clamp(9px, 1.2vw, 12px);
+            color: #8e8e93;
+            margin-top: 2px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            20% {
+                transform: rotate(2deg);
+            }
+            40% {
+                transform: rotate(-2deg);
+            }
+            60% {
+                transform: rotate(1deg);
+            }
+            80% {
+                transform: rotate(-1deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .ringing-animation {
+            animation: ring 0.5s ease-in-out infinite;
+        }
+
+        /* ===== UTILITY ===== */
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        .phone-app::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+
+        /* ===== SMALL SCREEN TWEAKS ===== */
+        @media (max-width: 380px) {
+            .keypad-grid {
+                gap: 8px;
+            }
+            .key {
+                min-height: 36px;
+                min-width: 36px;
+            }
+            .key-number {
+                font-size: 22px;
+            }
+            .tabs {
+                gap: 12px;
+                padding: 4px 8px 12px;
+            }
+            .tab-icon {
+                font-size: 16px;
+            }
+            .file-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .file-label {
+                justify-content: center;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .iphone {
+                max-width: 480px;
+                margin: 0 auto;
+                border-radius: 32px;
+                box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 20px 60px rgba(0, 0, 0, 0.8);
+                height: 90vh;
+                height: 90dvh;
+                margin-top: 5vh;
+            }
+            body {
+                background: #0a0a0a;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 400px) and (max-height: 700px) {
+            .keypad-screen,
+            .recents-screen,
+            .contacts-screen {
+                padding-top: 55px;
+                padding-bottom: 70px;
+            }
+            .number-display {
+                padding: 10px 14px;
+                margin-bottom: 16px;
+            }
+            .keypad-grid {
+                gap: 8px;
+            }
+            .call-button {
+                width: 50px;
+                height: 50px;
+            }
+            .call-button span {
+                font-size: 22px;
+            }
+            .call-avatar {
+                width: 70px;
+                height: 70px;
+            }
+            .call-avatar span {
+                font-size: 32px;
+            }
+            .call-name {
+                font-size: 20px;
+            }
+            .call-content {
+                padding-top: 40px;
+                padding-bottom: 20px;
+            }
+            .call-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+            .active-control {
+                padding: 8px 4px;
+            }
+            .active-control div:first-child {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="iphone">
+        <!-- Dynamic Island -->
+        <div class="dynamic-island"></div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="time">9:41</span>
+            <span>📶 🔋 100%</span>
+        </div>
+
+        <!-- Main App -->
+        <div class="phone-app" id="phoneApp">
+            <!-- Keypad -->
+            <div class="keypad-screen" id="keypadScreen">
+                <div class="number-display">
+                    <div class="entered-number" id="enteredNumber">&nbsp;</div>
+                    <div class="contact-hint" id="contactHint">Enter a number</div>
+                </div>
+                <div class="keypad-grid">
+                    <div class="key" data-number="1"><div class="key-number">1</div><div class="key-letters"></div></div>
+                    <div class="key" data-number="2"><div class="key-number">2</div><div class="key-letters">ABC</div></div>
+                    <div class="key" data-number="3"><div class="key-number">3</div><div class="key-letters">DEF</div></div>
+                    <div class="key" data-number="4"><div class="key-number">4</div><div class="key-letters">GHI</div></div>
+                    <div class="key" data-number="5"><div class="key-number">5</div><div class="key-letters">JKL</div></div>
+                    <div class="key" data-number="6"><div class="key-number">6</div><div class="key-letters">MNO</div></div>
+                    <div class="key" data-number="7"><div class="key-number">7</div><div class="key-letters">PQRS</div></div>
+                    <div class="key" data-number="8"><div class="key-number">8</div><div class="key-letters">TUV</div></div>
+                    <div class="key" data-number="9"><div class="key-number">9</div><div class="key-letters">WXYZ</div></div>
+                    <div class="key" data-number="*"><div class="key-number">*</div><div class="key-letters"></div></div>
+                    <div class="key" data-number="0"><div class="key-number">0</div><div class="key-letters">+</div></div>
+                    <div class="key" data-number="#" data-delete="true"><div class="key-number">⌫</div><div class="key-letters"></div></div>
+                </div>
+                <div class="flex-center">
+                    <div class="call-button" id="dialCallBtn"><span>📞</span></div>
+                </div>
+            </div>
+
+            <!-- Recents -->
+            <div class="recents-screen hidden" id="recentsScreen">
+                <div class="recents-header">Recents</div>
+                <div id="recentsList"></div>
+                <!-- Audio panel — sits behind recent calls -->
+                <div class="audio-settings-panel">
+                    <div class="audio-title">🎵 Custom Audio</div>
+                    <div class="file-row">
+                        <label class="file-label">🎼 Ringtone <input type="file" id="ringtoneUpload" accept="audio/mpeg,audio/wav,audio/mp3,audio/ogg"></label>
+                        <label class="file-label">🎙️ Call Audio <input type="file" id="callAudioUpload" accept="audio/mpeg,audio/wav,audio/mp3,audio/ogg"></label>
+                    </div>
+                    <div class="file-row">
+                        <span id="ringtoneFileName" class="file-name">No custom ringtone</span>
+                        <span id="callAudioFileName" class="file-name">No call audio</span>
+                    </div>
+                    <div class="file-row" style="justify-content: center; gap: 10px;">
+                        <button id="testRingtoneBtn" class="test-btn">🔊 Test</button>
+                        <button id="resetAudioBtn" class="test-btn reset-btn">Reset</button>
+                    </div>
+                    <div class="audio-hint">Upload MP3/WAV – plays during calls</div>
+                </div>
+            </div>
+
+            <!-- Contacts -->
+            <div class="contacts-screen hidden" id="contactsScreen">
+                <div class="contacts-header">Contacts</div>
+                <div id="contactsList"></div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="keypad"><div class="tab-icon">🔢</div><div class="tab-label">Keypad</div></div>
+                <div class="tab" data-tab="recents"><div class="tab-icon">⏱️</div><div class="tab-label">Recents</div></div>
+                <div class="tab" data-tab="contacts"><div class="tab-icon">👤</div><div class="tab-label">Contacts</div></div>
+            </div>
+        </div>
+
+        <!-- Call Screen -->
+        <div class="call-screen" id="callScreen">
+            <div class="call-content">
+                <div class="call-avatar" id="callAvatar"><span id="callAvatarEmoji">👨</span></div>
+                <div style="text-align:center; width:100%;">
+                    <div class="call-name" id="callName">Michael Chen</div>
+                    <div class="call-status">
+                        <div class="call-status-dot"></div>
+                        <span id="callStatusText">Incoming call...</span>
+                    </div>
+                </div>
+                <div id="incomingCallUI" style="width:100%;">
+                    <div class="call-buttons">
+                        <div class="call-btn decline-call" id="declineCallBtn">❌</div>
+                        <div class="call-btn accept-call" id="acceptCallBtn">📞</div>
+                    </div>
+                </div>
+                <div id="activeCallUI" class="hidden" style="width:100%;">
+                    <div class="active-call-buttons">
+                        <div class="active-control" id="muteActiveBtn"><div>🎤</div><div>Mute</div></div>
+                        <div class="active-control" id="speakerActiveBtn"><div>📢</div><div>Speaker</div></div>
+                        <div class="active-control" id="keypadActiveBtn"><div>🔢</div><div>Keypad</div></div>
+                    </div>
+                    <div class="call-buttons">
+                        <div class="call-btn decline-call" id="endCallBtn">❌</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CUSTOM AUDIO ====================
+        let customRingtoneURL = null;
+        let customCallAudioURL = null;
+        let ringtoneAudio = null;
+        let callAudioPlayer = null;
+        let isCallAudioMuted = false;
+        let testRingtoneAudio = null;
+
+        const ringtoneInput = document.getElementById('ringtoneUpload');
+        const callAudioInput = document.getElementById('callAudioUpload');
+        const ringtoneFileNameSpan = document.getElementById('ringtoneFileName');
+        const callAudioFileNameSpan = document.getElementById('callAudioFileName');
+        const testRingtoneBtn = document.getElementById('testRingtoneBtn');
+        const resetAudioBtn = document.getElementById('resetAudioBtn');
+
+        function stopCustomRingtone() { if (ringtoneAudio) { ringtoneAudio.pause();
+                ringtoneAudio.currentTime = 0; } }
+
+        function stopCallAudio() { if (callAudioPlayer) { callAudioPlayer.pause();
+                callAudioPlayer.currentTime = 0; } }
+
+        function stopTestRingtone() { if (testRingtoneAudio) { testRingtoneAudio.pause();
+                testRingtoneAudio.currentTime = 0; } }
+
+        function playCustomRingtoneLoop() {
+            stopCustomRingtone();
+            if (customRingtoneURL) {
+                ringtoneAudio = new Audio(customRingtoneURL);
+                ringtoneAudio.loop = true;
+                ringtoneAudio.volume = 0.7;
+                ringtoneAudio.play().catch(e => console.log("ringtone err", e));
+            }
+        }
+
+        function playCallAudioLoop() {
+            stopCallAudio();
+            if (customCallAudioURL && !isCallAudioMuted) {
+                callAudioPlayer = new Audio(customCallAudioURL);
+                callAudioPlayer.loop = true;
+                callAudioPlayer.volume = 0.55;
+                callAudioPlayer.play().catch(e => console.log("call audio err", e));
+            }
+        }
+
+        function updateMuteState(muted) {
+            isCallAudioMuted = muted;
+            if (window.isCallActive) {
+                if (isCallAudioMuted) stopCallAudio();
+                else playCallAudioLoop();
+            }
+        }
+
+        ringtoneInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (customRingtoneURL) URL.revokeObjectURL(customRingtoneURL);
+                customRingtoneURL = URL.createObjectURL(file);
+                ringtoneFileNameSpan.textContent = file.name.substring(0, 20);
+            } else { customRingtoneURL = null;
+                ringtoneFileNameSpan.textContent = "No custom ringtone"; }
+        });
+        callAudioInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (customCallAudioURL) URL.revokeObjectURL(customCallAudioURL);
+                customCallAudioURL = URL.createObjectURL(file);
+                callAudioFileNameSpan.textContent = file.name.substring(0, 20);
+            } else { customCallAudioURL = null;
+                callAudioFileNameSpan.textContent = "No call audio"; }
+        });
+        testRingtoneBtn.addEventListener('click', () => {
+            if (customRingtoneURL) {
+                stopTestRingtone();
+                testRingtoneAudio = new Audio(customRingtoneURL);
+                testRingtoneAudio.loop = false;
+                testRingtoneAudio.volume = 0.8;
+                testRingtoneAudio.play().catch(e => alert("Tap screen first to enable audio"));
+            } else { alert("Upload a ringtone file first (MP3/WAV)."); }
+        });
+        resetAudioBtn.addEventListener('click', () => {
+            if (customRingtoneURL) URL.revokeObjectURL(customRingtoneURL);
+            if (customCallAudioURL) URL.revokeObjectURL(customCallAudioURL);
+            customRingtoneURL = null;
+            customCallAudioURL = null;
+            ringtoneInput.value = '';
+            callAudioInput.value = '';
+            ringtoneFileNameSpan.textContent = "No custom ringtone";
+            callAudioFileNameSpan.textContent = "No call audio";
+            stopCustomRingtone();
+            stopCallAudio();
+        });
+
+        // ==================== DTMF ====================
+        let dtmfCtx = null;
+
+        function initDTMF() {
+            if (dtmfCtx && dtmfCtx.state !== 'closed') return dtmfCtx;
+            dtmfCtx = new(window.AudioContext || window.webkitAudioContext)();
+            return dtmfCtx;
+        }
+
+        function playDTMF(keyChar) {
+            const freqMap = { '1': [697, 1209], '2': [697, 1336], '3': [697, 1477], '4': [770, 1209], '5': [770, 1336],
+                '6': [770, 1477], '7': [852, 1209], '8': [852, 1336], '9': [852, 1477], '*': [941, 1209], '0': [941, 1336],
+                '#': [941, 1477] };
+            const freqs = freqMap[keyChar];
+            if (!freqs) return;
+            try {
+                const ctx = initDTMF();
+                if (ctx.state !== 'running') ctx.resume();
+                const now = ctx.currentTime;
+                const gain = ctx.createGain();
+                gain.connect(ctx.destination);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+                const osc1 = ctx.createOscillator();
+                osc1.frequency.value = freqs[0];
+                const osc2 = ctx.createOscillator();
+                osc2.frequency.value = freqs[1];
+                osc1.type = 'sine';
+                osc2.type = 'sine';
+                osc1.connect(gain);
+                osc2.connect(gain);
+                osc1.start();
+                osc2.start();
+                osc1.stop(now + 0.12);
+                osc2.stop(now + 0.12);
+            } catch (e) {}
+        }
+
+        // ==================== CALL STATE ====================
+        let currentNumber = '';
+        let isIncoming = false;
+        window.isCallActive = false;
+        let timerInterval = null;
+        let callSeconds = 0;
+        let currentCaller = { name: '', number: '', emoji: '' };
+        let callDirection = 'incoming';
+        let activeRingInterval = null;
+        let vibeInterval = null;
+
+        const contacts = [
+            { name: 'Michael Chen', number: '+1 (415) 555-0123', emoji: '👨‍💼' },
+            { name: 'Dad', number: '+1 (555) 987-6543', emoji: '👨' },
+            { name: 'Sarah Johnson', number: '+1 (888) 777-2390', emoji: '👩‍💼' },
+            { name: 'Mom', number: '+1 (555) 123-4567', emoji: '👩' }
+        ];
+        let recents = [];
+
+        function vibrate(p) { if (window.navigator?.vibrate) window.navigator.vibrate(p); }
+
+        function stopRingtone() {
+            if (activeRingInterval) { clearInterval(activeRingInterval);
+                activeRingInterval = null; }
+            stopCustomRingtone();
+        }
+
+        function startRingtone() {
+            stopRingtone();
+            if (customRingtoneURL) {
+                playCustomRingtoneLoop();
+            } else {
+                let ctx = initDTMF();
+
+                function pattern() {
+                    if (!isIncoming && callDirection !== 'outgoing') return;
+                    const now = ctx.currentTime;
+                    const vol = 0.18;
+                    const play = (f, start, dur) => { const o = ctx.createOscillator(),
+                            g = ctx.createGain();
+                        o.connect(g);
+                        g.connect(ctx.destination);
+                        o.frequency.value = f;
+                        g.gain.setValueAtTime(vol, start);
+                        g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+                        o.start(start);
+                        o.stop(start + dur); };
+                    play(587.33, now, 0.35);
+                    play(659.25, now + 0.4, 0.35);
+                    play(783.99, now + 0.8, 0.4);
+                    play(880.0, now + 1.2, 0.45);
+                }
+                pattern();
+                activeRingInterval = setInterval(() => { if (isIncoming || callDirection === 'outgoing') pattern(); },
+                2800);
+            }
+        }
+
+        function acceptCall() {
+            if (window.isCallActive) return;
+            stopRingtone();
+            if (vibeInterval) clearInterval(vibeInterval);
+            isIncoming = false;
+            window.isCallActive = true;
+            callDirection = 'active';
+            document.getElementById('incomingCallUI').classList.add('hidden');
+            document.getElementById('activeCallUI').classList.remove('hidden');
+            document.getElementById('callStatusText').textContent = '00:00';
+            document.querySelector('.call-content').classList.remove('ringing-animation');
+            if (timerInterval) clearInterval(timerInterval);
+            callSeconds = 0;
+            timerInterval = setInterval(() => {
+                if (window.isCallActive) {
+                    callSeconds++;
+                    document.getElementById('callStatusText').textContent =
+                        `${String(Math.floor(callSeconds/60)).padStart(2,'0')}:${String(callSeconds%60).padStart(2,'0')}`;
+                }
+            }, 1000);
+            playCallAudioLoop();
+            addToRecents(currentCaller.name, currentCaller.number, currentCaller.emoji, 'answered');
+            let ctx = initDTMF();
+            if (ctx) { const now = ctx.currentTime;
+                const g = ctx.createGain();
+                g.connect(ctx.destination);
+                g.gain.setValueAtTime(0.12, now);
+                g.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+                const o = ctx.createOscillator();
+                o.frequency.value = 880;
+                o.connect(g);
+                o.start();
+                o.stop(now + 0.18); }
+        }
+
+        function endCall() {
+            stopRingtone();
+            if (vibeInterval) clearInterval(vibeInterval);
+            if (timerInterval) clearInterval(timerInterval);
+            window.isCallActive = false;
+            isIncoming = false;
+            stopCallAudio();
+            document.getElementById('callScreen').classList.remove('active');
+            document.getElementById('phoneApp').classList.remove('slide-up');
+            isCallAudioMuted = false;
+            document.querySelector('#muteActiveBtn div:first-child').textContent = '🎤';
+        }
+
+        function showCallScreen(name, number, emoji, direction) {
+            stopRingtone();
+            stopCallAudio();
+            currentCaller = { name, number, emoji };
+            callDirection = direction;
+            isIncoming = (direction === 'incoming');
+            window.isCallActive = false;
+            document.getElementById('callName').textContent = name;
+            document.getElementById('callAvatarEmoji').textContent = emoji;
+            if (direction === 'incoming') {
+                document.getElementById('incomingCallUI').classList.remove('hidden');
+                document.getElementById('activeCallUI').classList.add('hidden');
+                document.getElementById('callStatusText').textContent = 'Incoming call...';
+                startRingtone();
+                vibrate([400, 200, 400]);
+                vibeInterval = setInterval(() => { if (isIncoming) vibrate(500); }, 2100);
+                document.querySelector('.call-content').classList.add('ringing-animation');
+            } else {
+                document.getElementById('incomingCallUI').classList.add('hidden');
+                document.getElementById('activeCallUI').classList.add('hidden');
+                document.getElementById('callStatusText').textContent = 'Calling...';
+                startRingtone();
+                vibrate(100);
+                setTimeout(() => {
+                    if (callDirection === 'outgoing' && !window.isCallActive) acceptCall();
+                }, 2000);
+            }
+            document.getElementById('callScreen').classList.add('active');
+            document.getElementById('phoneApp').classList.add('slide-up');
+        }
+
+        function makeCall(number) {
+            if (!number) return;
+            let contact = contacts.find(c => c.number === number) || { name: number, number, emoji: '👤' };
+            addToRecents(contact.name, contact.number, contact.emoji, 'outgoing');
+            showCallScreen(contact.name, contact.number, contact.emoji, 'outgoing');
+            currentNumber = '';
+            updateNumberDisplay();
+        }
+
+        function addToRecents(name, number, emoji, type) {
+            recents.unshift({ name, number, emoji, type, time: new Date().toLocaleTimeString([], { hour: '2-digit',
+                    minute: '2-digit' }) });
+            if (recents.length > 15) recents.pop();
+            updateRecentsList();
+        }
+
+        function updateNumberDisplay() {
+            const display = document.getElementById('enteredNumber');
+            const hint = document.getElementById('contactHint');
+            if (!currentNumber.length) { display.innerHTML = '&nbsp;';
+                hint.textContent = 'Enter a number'; } else { display.textContent = currentNumber;
+                const match = contacts.find(c => c.number === currentNumber);
+                hint.textContent = match ? match.name : 'Call'; }
+        }
+
+        function updateRecentsList() {
+            const container = document.getElementById('recentsList');
+            if (!recents.length) { container.innerHTML =
+                    '<div style="color:#8e8e93; text-align:center; padding:30px 0;">No recent calls</div>'; return; }
+            container.innerHTML = recents.map(r =>
+                `<div class="recent-item" data-number="${r.number}" data-name="${r.name}" data-emoji="${r.emoji}">
+                    <div class="recent-info">
+                        <div class="recent-avatar">${r.emoji}</div>
+                        <div>
+                            <div class="recent-name">${r.name}</div>
+                            <div class="recent-number">${r.number}</div>
+                        </div>
+                    </div>
+                    <div class="recent-time">${r.time}</div>
+                </div>`
+            ).join('');
+            document.querySelectorAll('.recent-item').forEach(el => el.addEventListener('click', () => makeCall(el.dataset
+                .number)));
+        }
+
+        function updateContactsList() {
+            const container = document.getElementById('contactsList');
+            container.innerHTML = contacts.map(c =>
+                `<div class="contact-item" data-number="${c.number}" data-name="${c.name}" data-emoji="${c.emoji}">
+                    <div class="contact-info">
+                        <div class="contact-avatar">${c.emoji}</div>
+                        <div>
+                            <div class="contact-name">${c.name}</div>
+                            <div class="contact-number">${c.number}</div>
+                        </div>
+                    </div>
+                    <div class="call-btn accept-call" style="width:44px; height:44px; font-size:20px; flex-shrink:0;">📞</div>
+                </div>`
+            ).join('');
+            document.querySelectorAll('.contact-item').forEach(el => el.addEventListener('click', () => makeCall(el.dataset
+                .number)));
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById('keypadScreen').classList.add('hidden');
+            document.getElementById('recentsScreen').classList.add('hidden');
+            document.getElementById('contactsScreen').classList.add('hidden');
+            document.getElementById(`${tabId}Screen`).classList.remove('hidden');
+        }
+
+        // ==================== EVENT BINDING ====================
+        document.querySelectorAll('.key').forEach(key => {
+            key.addEventListener('click', () => {
+                const num = key.getAttribute('data-number');
+                const isDel = key.getAttribute('data-delete');
+                if (isDel) { currentNumber = currentNumber.slice(0, -1); if (currentNumber) playDTMF('#');
+                    else playDTMF('#'); } else if (num === '*') { currentNumber += '*';
+                    playDTMF('*'); } else if (num !== '#') { currentNumber += num;
+                    playDTMF(num); }
+                updateNumberDisplay();
+                vibrate(15);
+            });
+        });
+
+        document.getElementById('dialCallBtn').addEventListener('click', () => { if (currentNumber.length) makeCall(
+                currentNumber); });
+        document.getElementById('acceptCallBtn').addEventListener('click', acceptCall);
+        document.getElementById('declineCallBtn').addEventListener('click', endCall);
+        document.getElementById('endCallBtn').addEventListener('click', endCall);
+
+        document.getElementById('muteActiveBtn').addEventListener('click', () => {
+            if (window.isCallActive) {
+                isCallAudioMuted = !isCallAudioMuted;
+                document.querySelector('#muteActiveBtn div:first-child').textContent = isCallAudioMuted ? '🔇' :
+                    '🎤';
+                updateMuteState(isCallAudioMuted);
+                vibrate(10);
+            }
+        });
+        document.getElementById('speakerActiveBtn').addEventListener('click', () => { if (window.isCallActive) vibrate(
+                10); });
+        document.getElementById('keypadActiveBtn').addEventListener('click', () => { if (window.isCallActive) alert(
+                "🔢 DTMF Keypad (Demo)"); });
+
+        document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => { switchTab(tab.dataset
+                .tab);
+            vibrate(10); }));
+
+        // ==================== CLOCK ====================
+        function updateTime() {
+            const now = new Date();
+            let h = now.getHours(),
+                m = now.getMinutes();
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12;
+            document.getElementById('time').textContent = `${h}:${String(m).padStart(2,'0')} ${ampm}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // ==================== INIT ====================
+        document.body.addEventListener('touchstart', () => initDTMF(), { once: true });
+        updateNumberDisplay();
+        updateRecentsList();
+        updateContactsList();
+        switchTab('keypad');
+        addToRecents('Michael Chen', '+1 (415) 555-0123', '👨‍💼', 'missed');
+        addToRecents('Mom', '+1 (555) 123-4567', '👩', 'outgoing');
+    </script>
+
+</body>
+</html>
