@@ -25,6 +25,7 @@
             --text-main: #ffffff;
             --text-muted: #8e8e93;
             --system-red: #ff3b30;
+            --system-green: #34c759;
         }
         html,
         body {
@@ -437,9 +438,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--gold-primary);
+            border: 2px solid var(--gold-primary);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             flex-shrink: 0;
+            transition: border-color 0.3s;
         }
         .call-avatar span {
             font-size: clamp(28px, 7vw, 54px);
@@ -482,9 +484,10 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.1s;
+            transition: transform 0.1s, box-shadow 0.2s;
             font-size: clamp(18px, 4vw, 28px);
             border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         .call-btn:active {
             transform: scale(0.9);
@@ -494,7 +497,7 @@
             color: white;
         }
         .accept-call {
-            background: #34c759;
+            background: var(--system-green);
             color: white;
         }
 
@@ -538,25 +541,12 @@
 
         /* ===== ANIMATIONS ===== */
         @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.3;
-                transform: scale(1.2);
-            }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.2); }
         }
         @keyframes subtle-ring {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.03);
-                border-color: var(--gold-light);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); border-color: var(--gold-light); }
         }
         .ringing-animation {
             animation: subtle-ring 2s infinite ease-in-out;
@@ -570,123 +560,42 @@
 
         /* ===== EXTREME SMALL ===== */
         @media (max-width: 360px) {
-            .keypad-grid {
-                gap: 5px;
-            }
-            .key {
-                min-height: 32px;
-                min-width: 32px;
-            }
-            .key-number {
-                font-size: 16px;
-            }
-            .tabs {
-                gap: 6px;
-                padding: 2px 4px 8px;
-            }
-            .tab-icon {
-                font-size: 12px;
-            }
-            .tab-label {
-                font-size: 6px;
-            }
-            .file-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .file-label {
-                justify-content: center;
-            }
+            .keypad-grid { gap: 5px; }
+            .key { min-height: 32px; min-width: 32px; }
+            .key-number { font-size: 16px; }
+            .tabs { gap: 6px; padding: 2px 4px 8px; }
+            .tab-icon { font-size: 12px; }
+            .tab-label { font-size: 6px; }
+            .file-row { flex-direction: column; align-items: stretch; }
+            .file-label { justify-content: center; }
         }
 
         /* ===== LANDSCAPE PHONE ===== */
         @media (max-height: 500px) and (orientation: landscape) {
-            .keypad-screen {
-                padding-top: 20px;
-                padding-bottom: 30px;
-            }
-            .keypad-grid {
-                gap: 4px;
-            }
-            .key {
-                min-height: 28px;
-                min-width: 28px;
-            }
-            .key-number {
-                font-size: 14px;
-            }
-            .key-letters {
-                display: none;
-            }
-            .number-display {
-                padding: 4px 10px;
-                margin-bottom: 6px;
-            }
-            .entered-number {
-                font-size: 16px;
-            }
-            .call-button {
-                width: 36px;
-                height: 36px;
-            }
-            .call-button span {
-                font-size: 14px;
-            }
-            .status-bar {
-                height: 24px;
-                font-size: 9px;
-                padding: 2px 10px;
-            }
-            .dynamic-island {
-                height: 14px;
-                width: 50px;
-                top: 3px;
-            }
-            .tabs {
-                padding: 2px 4px 6px;
-                gap: 6px;
-            }
-            .tab-icon {
-                font-size: 10px;
-            }
-            .tab-label {
-                display: none;
-            }
-            .call-avatar {
-                width: 44px;
-                height: 44px;
-            }
-            .call-avatar span {
-                font-size: 20px;
-            }
-            .call-name {
-                font-size: 14px;
-                margin-top: 4px;
-            }
-            .call-status {
-                font-size: 10px;
-            }
-            .call-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 14px;
-            }
-            .active-call-buttons {
-                gap: 6px;
-                max-width: 260px;
-            }
-            .active-control {
-                padding: 4px 2px;
-            }
-            .active-control div:first-child {
-                font-size: 12px;
-            }
-            .active-control div:last-child {
-                font-size: 6px;
-            }
-            .call-content {
-                padding: 16px 12px 12px;
-            }
+            .keypad-screen { padding-top: 20px; padding-bottom: 30px; }
+            .keypad-grid { gap: 4px; }
+            .key { min-height: 28px; min-width: 28px; }
+            .key-number { font-size: 14px; }
+            .key-letters { display: none; }
+            .number-display { padding: 4px 10px; margin-bottom: 6px; }
+            .entered-number { font-size: 16px; }
+            .call-button { width: 36px; height: 36px; }
+            .call-button span { font-size: 14px; }
+            .status-bar { height: 24px; font-size: 9px; padding: 2px 10px; }
+            .dynamic-island { height: 14px; width: 50px; top: 3px; }
+            .tabs { padding: 2px 4px 6px; gap: 6px; }
+            .tab-icon { font-size: 10px; }
+            .tab-label { display: none; }
+            .call-avatar { width: 44px; height: 44px; }
+            .call-avatar span { font-size: 20px; }
+            .call-name { font-size: 14px; margin-top: 4px; }
+            .call-status { font-size: 10px; }
+            .call-btn { width: 36px; height: 36px; font-size: 14px; }
+            .active-call-buttons { gap: 6px; max-width: 260px; }
+            .active-control { padding: 4px 2px; }
+            .active-control div:first-child { font-size: 12px; }
+            .active-control div:last-child { font-size: 6px; }
+            .call-content { padding: 16px 12px 12px; }
         }
 
         /* ===== TABLET / DESKTOP — fullscreen with subtle frame ===== */
@@ -701,14 +610,8 @@
                 height: 92vh;
                 height: 92dvh;
             }
-            body {
-                background: #080808;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+            body { background: #080808; display: flex; align-items: center; justify-content: center; }
         }
-
         @media (min-width: 1024px) {
             .iphone {
                 max-width: 500px;
@@ -825,421 +728,478 @@
     </div>
 
     <script>
-        // ============================================================
-        //  STATE
-        // ============================================================
-        let customRingtoneURL = null;
-        let customCallAudioURL = null;
-        let ringtoneAudio = null;
-        let callAudioPlayer = null;
-        let isCallAudioMuted = false;
-        let isSpeakerOn = false;
-        let testRingtoneAudio = null;
+        (function() {
+            'use strict';
 
-        let currentNumber = '';
-        let isIncoming = false;
-        window.isCallActive = false;
-        let timerInterval = null;
-        let callSeconds = 0;
-        let currentCaller = { name: '', number: '', emoji: '' };
-        let callDirection = 'incoming';
-        let activeRingInterval = null;
-        let zeroTimer = null;
-        let zeroLongPressed = false;
+            // ============================================================
+            //  STATE
+            // ============================================================
+            let customRingtoneURL = null;
+            let customCallAudioURL = null;
+            let ringtoneAudio = null;
+            let callAudioPlayer = null;
+            let isCallAudioMuted = false;
+            let isSpeakerOn = false;
+            let testRingtoneAudio = null;
 
-        const contacts = [
-            { name: 'Michael Chen', number: '+1 (415) 555-0123', emoji: '👨‍💼' },
-            { name: 'Dad', number: '+1 (555) 987-6543', emoji: '👨' },
-            { name: 'Sarah Johnson', number: '+1 (888) 777-2390', emoji: '👩‍💼' },
-            { name: 'Mom', number: '+1 (555) 123-4567', emoji: '👩' }
-        ];
-        let recents = [];
+            let currentNumber = '';
+            let isIncoming = false;
+            let isCallActive = false;          // local flag
+            window.isCallActive = false;       // for global access
+            let timerInterval = null;
+            let callSeconds = 0;
+            let currentCaller = { name: '', number: '', emoji: '' };
+            let callDirection = 'incoming';    // 'incoming' or 'outgoing'
+            let activeRingInterval = null;
+            let zeroTimer = null;
+            let zeroLongPressed = false;
 
-        // ============================================================
-        //  AUDIO ENGINE
-        // ============================================================
-        let dtmfCtx = null;
+            const contacts = [
+                { name: 'Michael Chen', number: '+1 (415) 555-0123', emoji: '👨‍💼' },
+                { name: 'Dad', number: '+1 (555) 987-6543', emoji: '👨' },
+                { name: 'Sarah Johnson', number: '+1 (888) 777-2390', emoji: '👩‍💼' },
+                { name: 'Mom', number: '+1 (555) 123-4567', emoji: '👩' }
+            ];
+            let recents = [];
 
-        function initDTMF() {
-            if (dtmfCtx && dtmfCtx.state !== 'closed') return dtmfCtx;
-            dtmfCtx = new(window.AudioContext || window.webkitAudioContext)();
-            return dtmfCtx;
-        }
+            // DOM refs
+            const $ = id => document.getElementById(id);
+            const callScreen = $('callScreen');
+            const phoneApp = $('phoneApp');
+            const callContentFrame = $('callContentFrame');
+            const callName = $('callName');
+            const callAvatarEmoji = $('callAvatarEmoji');
+            const callStatusText = $('callStatusText');
+            const incomingCallUI = $('incomingCallUI');
+            const activeCallUI = $('activeCallUI');
+            const acceptCallBtn = $('acceptCallBtn');
+            const declineCallBtn = $('declineCallBtn');
+            const endCallBtn = $('endCallBtn');
+            const muteBtn = $('muteActiveBtn');
+            const speakerBtn = $('speakerActiveBtn');
+            const keypadActiveBtn = $('keypadActiveBtn');
 
-        function playDTMF(keyChar) {
-            const map = { '1': [697, 1209], '2': [697, 1336], '3': [697, 1477], '4': [770, 1209], '5': [770, 1336],
-                '6': [770, 1477], '7': [852, 1209], '8': [852, 1336], '9': [852, 1477], '*': [941, 1209], '0': [941, 1336],
-                '#': [941, 1477] };
-            const f = map[keyChar];
-            if (!f) return;
-            try {
-                const ctx = initDTMF();
-                if (ctx.state !== 'running') ctx.resume();
-                const now = ctx.currentTime;
-                const g = ctx.createGain();
-                g.connect(ctx.destination);
-                g.gain.setValueAtTime(isSpeakerOn ? 0.35 : 0.15, now);
-                g.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
-                const o1 = ctx.createOscillator(),
-                    o2 = ctx.createOscillator();
-                o1.frequency.value = f[0];
-                o2.frequency.value = f[1];
-                o1.connect(g);
-                o2.connect(g);
-                o1.start();
-                o2.start();
-                o1.stop(now + 0.12);
-                o2.stop(now + 0.12);
-            } catch (e) {}
-        }
+            // ============================================================
+            //  AUDIO ENGINE
+            // ============================================================
+            let dtmfCtx = null;
 
-        function stopCustomRingtone() { if (ringtoneAudio) { ringtoneAudio.pause();
-                ringtoneAudio.currentTime = 0; } }
-
-        function stopCallAudio() { if (callAudioPlayer) { callAudioPlayer.pause();
-                callAudioPlayer.currentTime = 0; } }
-
-        function stopTestRingtone() { if (testRingtoneAudio) { testRingtoneAudio.pause();
-                testRingtoneAudio.currentTime = 0; } }
-
-        function playCustomRingtoneLoop() {
-            stopCustomRingtone();
-            if (customRingtoneURL) {
-                ringtoneAudio = new Audio(customRingtoneURL);
-                ringtoneAudio.loop = true;
-                ringtoneAudio.volume = isSpeakerOn ? 1.0 : 0.7;
-                ringtoneAudio.play().catch(e => console.log(e));
+            function initDTMF() {
+                if (dtmfCtx && dtmfCtx.state !== 'closed') return dtmfCtx;
+                dtmfCtx = new(window.AudioContext || window.webkitAudioContext)();
+                return dtmfCtx;
             }
-        }
 
-        function playCallAudioLoop() {
-            stopCallAudio();
-            if (customCallAudioURL && !isCallAudioMuted) {
-                callAudioPlayer = new Audio(customCallAudioURL);
-                callAudioPlayer.loop = true;
-                callAudioPlayer.volume = isSpeakerOn ? 1.0 : 0.55;
-                callAudioPlayer.play().catch(e => console.log(e));
-            }
-        }
-
-        function vibrate(ms) { if (window.navigator?.vibrate) window.navigator.vibrate(ms); }
-
-        // ============================================================
-        //  RINGTONE CONTROLLER
-        // ============================================================
-        function startRingtone() {
-            stopRingtone();
-            if (customRingtoneURL) {
-                playCustomRingtoneLoop();
-            } else {
-                let ctx = initDTMF();
-
-                function pattern() {
-                    if (!isIncoming && callDirection !== 'outgoing') return;
+            function playDTMF(keyChar) {
+                const map = { '1': [697, 1209], '2': [697, 1336], '3': [697, 1477], '4': [770, 1209], '5': [770, 1336],
+                    '6': [770, 1477], '7': [852, 1209], '8': [852, 1336], '9': [852, 1477], '*': [941, 1209], '0': [941, 1336],
+                    '#': [941, 1477] };
+                const f = map[keyChar];
+                if (!f) return;
+                try {
+                    const ctx = initDTMF();
+                    if (ctx.state !== 'running') ctx.resume();
                     const now = ctx.currentTime;
-                    const vol = isSpeakerOn ? 0.35 : 0.15;
-                    const play = (f, s, d) => {
-                        const o = ctx.createOscillator(),
-                            g = ctx.createGain();
-                        o.connect(g);
-                        g.connect(ctx.destination);
-                        o.frequency.value = f;
-                        g.gain.setValueAtTime(vol, s);
-                        g.gain.exponentialRampToValueAtTime(0.0001, s + d);
-                        o.start(s);
-                        o.stop(s + d);
-                    };
-                    play(659.25, now, 0.3);
-                    play(783.99, now + 0.3, 0.3);
-                }
-                pattern();
-                activeRingInterval = setInterval(() => { pattern(); }, 2000);
+                    const g = ctx.createGain();
+                    g.connect(ctx.destination);
+                    g.gain.setValueAtTime(isSpeakerOn ? 0.35 : 0.15, now);
+                    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+                    const o1 = ctx.createOscillator(),
+                        o2 = ctx.createOscillator();
+                    o1.frequency.value = f[0];
+                    o2.frequency.value = f[1];
+                    o1.connect(g);
+                    o2.connect(g);
+                    o1.start();
+                    o2.start();
+                    o1.stop(now + 0.12);
+                    o2.stop(now + 0.12);
+                } catch (e) { /* ignore */ }
             }
-        }
 
-        function stopRingtone() {
-            if (activeRingInterval) { clearInterval(activeRingInterval);
-                activeRingInterval = null; }
-            stopCustomRingtone();
-        }
+            function stopCustomRingtone() { if (ringtoneAudio) { ringtoneAudio.pause();
+                    ringtoneAudio.currentTime = 0; } }
 
-        // ============================================================
-        //  CALL LOGIC
-        // ============================================================
-        function acceptCall() {
-            if (window.isCallActive) return;
-            stopRingtone();
-            isIncoming = false;
-            window.isCallActive = true;
-            callDirection = 'active';
-            document.getElementById('incomingCallUI').classList.add('hidden');
-            document.getElementById('activeCallUI').classList.remove('hidden');
-            document.getElementById('callStatusText').textContent = '00:00';
-            document.getElementById('callContentFrame').classList.remove('ringing-animation');
+            function stopCallAudio() { if (callAudioPlayer) { callAudioPlayer.pause();
+                    callAudioPlayer.currentTime = 0; } }
 
-            if (timerInterval) clearInterval(timerInterval);
-            callSeconds = 0;
-            timerInterval = setInterval(() => {
-                if (window.isCallActive) {
-                    callSeconds++;
-                    document.getElementById('callStatusText').textContent =
-                        `${String(Math.floor(callSeconds/60)).padStart(2,'0')}:${String(callSeconds%60).padStart(2,'0')}`;
+            function stopTestRingtone() { if (testRingtoneAudio) { testRingtoneAudio.pause();
+                    testRingtoneAudio.currentTime = 0; } }
+
+            function playCustomRingtoneLoop() {
+                stopCustomRingtone();
+                if (customRingtoneURL) {
+                    ringtoneAudio = new Audio(customRingtoneURL);
+                    ringtoneAudio.loop = true;
+                    ringtoneAudio.volume = isSpeakerOn ? 1.0 : 0.7;
+                    ringtoneAudio.play().catch(e => console.warn('Ringtone play blocked', e));
                 }
-            }, 1000);
-            playCallAudioLoop();
-            addToRecents(currentCaller.name, currentCaller.number, currentCaller.emoji, 'answered');
-        }
-
-        function endCall() {
-            stopRingtone();
-            if (timerInterval) clearInterval(timerInterval);
-            window.isCallActive = false;
-            isIncoming = false;
-            stopCallAudio();
-            document.getElementById('callScreen').classList.remove('active');
-            document.getElementById('phoneApp').classList.remove('slide-up');
-            isCallAudioMuted = false;
-            isSpeakerOn = false;
-            document.getElementById('muteActiveBtn').classList.remove('engaged');
-            document.getElementById('speakerActiveBtn').classList.remove('engaged');
-            document.getElementById('callContentFrame').classList.remove('ringing-animation');
-        }
-
-        function showCallScreen(name, number, emoji, direction) {
-            stopRingtone();
-            stopCallAudio();
-            currentCaller = { name, number, emoji };
-            callDirection = direction;
-            isIncoming = (direction === 'incoming');
-            window.isCallActive = false;
-
-            document.getElementById('callName').textContent = name;
-            document.getElementById('callAvatarEmoji').textContent = emoji;
-
-            if (direction === 'incoming') {
-                document.getElementById('incomingCallUI').classList.remove('hidden');
-                document.getElementById('activeCallUI').classList.add('hidden');
-                document.getElementById('callStatusText').textContent = 'Incoming call...';
-                document.getElementById('callContentFrame').classList.add('ringing-animation');
-                startRingtone();
-                vibrate([300, 200, 300]);
-            } else {
-                document.getElementById('incomingCallUI').classList.add('hidden');
-                document.getElementById('activeCallUI').classList.add('hidden');
-                document.getElementById('callStatusText').textContent = 'Calling...';
-                startRingtone();
-                setTimeout(() => {
-                    if (callDirection === 'outgoing' && !window.isCallActive) acceptCall();
-                }, 2500);
             }
-            document.getElementById('callScreen').classList.add('active');
-            document.getElementById('phoneApp').classList.add('slide-up');
-        }
 
-        function makeCall(number) {
-            if (!number) return;
-            let contact = contacts.find(c => c.number === number) || { name: number, number, emoji: '👤' };
-            showCallScreen(contact.name, contact.number, contact.emoji, 'outgoing');
-            currentNumber = '';
-            updateNumberDisplay();
-        }
+            function playCallAudioLoop() {
+                stopCallAudio();
+                if (customCallAudioURL && !isCallAudioMuted) {
+                    callAudioPlayer = new Audio(customCallAudioURL);
+                    callAudioPlayer.loop = true;
+                    callAudioPlayer.volume = isSpeakerOn ? 1.0 : 0.55;
+                    callAudioPlayer.play().catch(e => console.warn('Call audio play blocked', e));
+                }
+            }
 
-        function addToRecents(name, number, emoji, type) {
-            recents.unshift({ name, number, emoji, type, time: new Date().toLocaleTimeString([], { hour: '2-digit',
-                    minute: '2-digit' }) });
-            if (recents.length > 20) recents.pop();
-            updateRecentsList();
-        }
+            function vibrate(ms) { if (window.navigator?.vibrate) window.navigator.vibrate(ms); }
 
-        // ============================================================
-        //  UI UPDATES
-        // ============================================================
-        function updateNumberDisplay() {
-            const display = document.getElementById('enteredNumber');
-            const hint = document.getElementById('contactHint');
-            if (!currentNumber.length) { display.innerHTML = '&nbsp;';
-                hint.textContent = 'ENTER NUMBER'; } else { display.textContent = currentNumber;
-                const match = contacts.find(c => c.number === currentNumber);
-                hint.textContent = match ? match.name : 'UNKNOWN LOCAL'; }
-        }
+            // ============================================================
+            //  RINGTONE CONTROLLER
+            // ============================================================
+            function stopRingtone() {
+                if (activeRingInterval) { clearInterval(activeRingInterval);
+                    activeRingInterval = null; }
+                stopCustomRingtone();
+            }
 
-        function updateRecentsList() {
-            const container = document.getElementById('recentsList');
-            if (!recents.length) { container.innerHTML =
-                    '<div style="color:var(--text-muted); text-align:center; padding:24px 0; font-size:14px;">No recent calls</div>';
-                return; }
-            container.innerHTML = recents.map(r =>
-                `<div class="recent-item" data-number="${r.number}"><div class="recent-info"><div class="recent-avatar">${r.emoji}</div><div><div class="recent-name">${r.name}</div><div class="recent-number">${r.number}</div></div></div><div class="recent-time">${r.time}</div></div>`
-                ).join('');
-            document.querySelectorAll('.recent-item').forEach(el => el.addEventListener('click', () => makeCall(el.dataset
-                .number)));
-        }
+            function startRingtone() {
+                stopRingtone();
+                if (customRingtoneURL) {
+                    playCustomRingtoneLoop();
+                } else {
+                    // Fallback synthetic ringtone (two‑note pattern)
+                    let ctx = initDTMF();
 
-        function updateContactsList() {
-            const container = document.getElementById('contactsList');
-            container.innerHTML = contacts.map(c =>
-                `<div class="contact-item" data-number="${c.number}"><div class="contact-info"><div class="contact-avatar">${c.emoji}</div><div><div class="contact-name">${c.name}</div><div class="contact-number">${c.number}</div></div></div><div class="call-button" style="width:36px; height:36px; box-shadow:none; flex-shrink:0;"><span>📞</span></div></div>`
-                ).join('');
-            document.querySelectorAll('.contact-item').forEach(el => el.addEventListener('click', () => makeCall(el.dataset
-                .number)));
-        }
+                    function pattern() {
+                        if (!isIncoming && callDirection !== 'outgoing') return;
+                        const now = ctx.currentTime;
+                        const vol = isSpeakerOn ? 0.35 : 0.15;
+                        const play = (f, s, d) => {
+                            const o = ctx.createOscillator(),
+                                g = ctx.createGain();
+                            o.connect(g);
+                            g.connect(ctx.destination);
+                            o.frequency.value = f;
+                            g.gain.setValueAtTime(vol, s);
+                            g.gain.exponentialRampToValueAtTime(0.0001, s + d);
+                            o.start(s);
+                            o.stop(s + d);
+                        };
+                        play(659.25, now, 0.3);
+                        play(783.99, now + 0.3, 0.3);
+                    }
+                    pattern();
+                    activeRingInterval = setInterval(() => { pattern(); }, 2000);
+                }
+            }
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
-            document.getElementById('keypadScreen').classList.add('hidden');
-            document.getElementById('recentsScreen').classList.add('hidden');
-            document.getElementById('contactsScreen').classList.add('hidden');
-            document.getElementById(`${tabId}Screen`).classList.remove('hidden');
-        }
+            // ============================================================
+            //  CALL LOGIC
+            // ============================================================
+            function acceptCall() {
+                if (window.isCallActive) return;
+                stopRingtone();
+                isIncoming = false;
+                window.isCallActive = true;
+                isCallActive = true;
+                callDirection = 'active';
+                incomingCallUI.classList.add('hidden');
+                activeCallUI.classList.remove('hidden');
+                callStatusText.textContent = '00:00';
+                callContentFrame.classList.remove('ringing-animation');
+                // Update avatar border
+                document.querySelector('.call-avatar').style.borderColor = 'var(--system-green)';
 
-        // ============================================================
-        //  EVENT BINDING
-        // ============================================================
-        // --- Keypad (except zero) ---
-        document.querySelectorAll('.key:not(#zeroKey)').forEach(key => {
-            key.addEventListener('click', () => {
-                const num = key.getAttribute('data-number');
-                if (key.getAttribute('data-delete')) { currentNumber = currentNumber.slice(0, -1);
-                    playDTMF('#'); } else { currentNumber += num;
-                    playDTMF(num); }
+                // Start timer
+                if (timerInterval) clearInterval(timerInterval);
+                callSeconds = 0;
+                timerInterval = setInterval(() => {
+                    if (window.isCallActive) {
+                        callSeconds++;
+                        const mins = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+                        const secs = String(callSeconds % 60).padStart(2, '0');
+                        callStatusText.textContent = `${mins}:${secs}`;
+                    }
+                }, 1000);
+                playCallAudioLoop();
+                addToRecents(currentCaller.name, currentCaller.number, currentCaller.emoji, 'answered');
+                // Haptic feedback
+                vibrate([30, 50, 30]);
+            }
+
+            function endCall() {
+                stopRingtone();
+                if (timerInterval) clearInterval(timerInterval);
+                window.isCallActive = false;
+                isCallActive = false;
+                isIncoming = false;
+                stopCallAudio();
+                callScreen.classList.remove('active');
+                phoneApp.classList.remove('slide-up');
+                // Reset UI states
+                isCallAudioMuted = false;
+                isSpeakerOn = false;
+                muteBtn.classList.remove('engaged');
+                speakerBtn.classList.remove('engaged');
+                callContentFrame.classList.remove('ringing-animation');
+                document.querySelector('.call-avatar').style.borderColor = 'var(--gold-primary)';
+                // Reset mute icon
+                muteBtn.querySelector('div:first-child').textContent = '🎤';
+                speakerBtn.querySelector('div:first-child').textContent = '📢';
+                vibrate(30);
+            }
+
+            function showCallScreen(name, number, emoji, direction) {
+                stopRingtone();
+                stopCallAudio();
+                currentCaller = { name, number, emoji };
+                callDirection = direction;
+                isIncoming = (direction === 'incoming');
+                window.isCallActive = false;
+                isCallActive = false;
+
+                callName.textContent = name;
+                callAvatarEmoji.textContent = emoji;
+
+                if (direction === 'incoming') {
+                    incomingCallUI.classList.remove('hidden');
+                    activeCallUI.classList.add('hidden');
+                    callStatusText.textContent = 'Incoming call...';
+                    callContentFrame.classList.add('ringing-animation');
+                    startRingtone();
+                    vibrate([300, 200, 300]);
+                    document.querySelector('.call-avatar').style.borderColor = 'var(--gold-primary)';
+                } else { // outgoing
+                    incomingCallUI.classList.add('hidden');
+                    activeCallUI.classList.add('hidden');
+                    callStatusText.textContent = 'Calling...';
+                    startRingtone();
+                    vibrate(100);
+                    // Auto‑answer simulation after 2.5s (pro feature)
+                    setTimeout(() => {
+                        if (callDirection === 'outgoing' && !window.isCallActive) {
+                            acceptCall();
+                        }
+                    }, 2500);
+                    document.querySelector('.call-avatar').style.borderColor = 'var(--gold-primary)';
+                }
+                callScreen.classList.add('active');
+                phoneApp.classList.add('slide-up');
+            }
+
+            function makeCall(number) {
+                if (!number) return;
+                let contact = contacts.find(c => c.number === number) || { name: number, number, emoji: '👤' };
+                // Log outgoing before showing call (so it appears in recents)
+                addToRecents(contact.name, contact.number, contact.emoji, 'outgoing');
+                showCallScreen(contact.name, contact.number, contact.emoji, 'outgoing');
+                currentNumber = '';
                 updateNumberDisplay();
-                vibrate(12);
+            }
+
+            function addToRecents(name, number, emoji, type) {
+                recents.unshift({ name, number, emoji, type, time: new Date().toLocaleTimeString([], { hour: '2-digit',
+                        minute: '2-digit' }) });
+                if (recents.length > 20) recents.pop();
+                updateRecentsList();
+            }
+
+            // ============================================================
+            //  UI UPDATES
+            // ============================================================
+            function updateNumberDisplay() {
+                const display = document.getElementById('enteredNumber');
+                const hint = document.getElementById('contactHint');
+                if (!currentNumber.length) { display.innerHTML = '&nbsp;';
+                    hint.textContent = 'ENTER NUMBER'; } else { display.textContent = currentNumber;
+                    const match = contacts.find(c => c.number === currentNumber);
+                    hint.textContent = match ? match.name : 'UNKNOWN LOCAL'; }
+            }
+
+            function updateRecentsList() {
+                const container = document.getElementById('recentsList');
+                if (!recents.length) { container.innerHTML =
+                        '<div style="color:var(--text-muted); text-align:center; padding:24px 0; font-size:14px;">No recent calls</div>';
+                    return; }
+                container.innerHTML = recents.map(r =>
+                    `<div class="recent-item" data-number="${r.number}"><div class="recent-info"><div class="recent-avatar">${r.emoji}</div><div><div class="recent-name">${r.name}</div><div class="recent-number">${r.number}</div></div></div><div class="recent-time">${r.time}</div></div>`
+                    ).join('');
+                document.querySelectorAll('.recent-item').forEach(el => el.addEventListener('click', () => makeCall(el
+                    .dataset.number)));
+            }
+
+            function updateContactsList() {
+                const container = document.getElementById('contactsList');
+                container.innerHTML = contacts.map(c =>
+                    `<div class="contact-item" data-number="${c.number}"><div class="contact-info"><div class="contact-avatar">${c.emoji}</div><div><div class="contact-name">${c.name}</div><div class="contact-number">${c.number}</div></div></div><div class="call-button" style="width:36px; height:36px; box-shadow:none; flex-shrink:0;"><span>📞</span></div></div>`
+                    ).join('');
+                document.querySelectorAll('.contact-item').forEach(el => el.addEventListener('click', () => makeCall(el
+                    .dataset.number)));
+            }
+
+            function switchTab(tabId) {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
+                document.getElementById('keypadScreen').classList.add('hidden');
+                document.getElementById('recentsScreen').classList.add('hidden');
+                document.getElementById('contactsScreen').classList.add('hidden');
+                document.getElementById(`${tabId}Screen`).classList.remove('hidden');
+            }
+
+            // ============================================================
+            //  EVENT BINDING
+            // ============================================================
+            // --- Keypad (except zero) ---
+            document.querySelectorAll('.key:not(#zeroKey)').forEach(key => {
+                key.addEventListener('click', () => {
+                    const num = key.getAttribute('data-number');
+                    if (key.getAttribute('data-delete')) { currentNumber = currentNumber.slice(0, -1);
+                        playDTMF('#'); } else { currentNumber += num;
+                        playDTMF(num); }
+                    updateNumberDisplay();
+                    vibrate(12);
+                });
             });
-        });
 
-        // --- Smart zero key: short tap = 0, long press = + ---
-        const zeroKey = document.getElementById('zeroKey');
-        const handleZeroStart = () => {
-            zeroLongPressed = false;
-            zeroTimer = setTimeout(() => {
-                zeroLongPressed = true;
-                currentNumber += '+';
-                updateNumberDisplay();
-                playDTMF('*');
-                vibrate([40, 30]);
-            }, 650);
-        };
-        const handleZeroEnd = (e) => {
-            clearTimeout(zeroTimer);
-            if (!zeroLongPressed) {
-                currentNumber += '0';
-                updateNumberDisplay();
-                playDTMF('0');
-                vibrate(12);
-            }
-            zeroLongPressed = false;
-            e.preventDefault();
-        };
-        zeroKey.addEventListener('mousedown', handleZeroStart);
-        zeroKey.addEventListener('mouseup', handleZeroEnd);
-        zeroKey.addEventListener('touchstart', (e) => { handleZeroStart();
-            e.preventDefault(); });
-        zeroKey.addEventListener('touchend', handleZeroEnd);
+            // --- Smart zero key: short tap = 0, long press = + ---
+            const zeroKey = document.getElementById('zeroKey');
+            const handleZeroStart = () => {
+                zeroLongPressed = false;
+                zeroTimer = setTimeout(() => {
+                    zeroLongPressed = true;
+                    currentNumber += '+';
+                    updateNumberDisplay();
+                    playDTMF('*');
+                    vibrate([40, 30]);
+                }, 650);
+            };
+            const handleZeroEnd = (e) => {
+                clearTimeout(zeroTimer);
+                if (!zeroLongPressed) {
+                    currentNumber += '0';
+                    updateNumberDisplay();
+                    playDTMF('0');
+                    vibrate(12);
+                }
+                zeroLongPressed = false;
+                e.preventDefault();
+            };
+            zeroKey.addEventListener('mousedown', handleZeroStart);
+            zeroKey.addEventListener('mouseup', handleZeroEnd);
+            zeroKey.addEventListener('touchstart', (e) => { handleZeroStart();
+                e.preventDefault(); });
+            zeroKey.addEventListener('touchend', handleZeroEnd);
 
-        // --- File uploads ---
-        const ringtoneInput = document.getElementById('ringtoneUpload');
-        const callAudioInput = document.getElementById('callAudioUpload');
-        const ringtoneFileNameSpan = document.getElementById('ringtoneFileName');
-        const callAudioFileNameSpan = document.getElementById('callAudioFileName');
-        const testRingtoneBtn = document.getElementById('testRingtoneBtn');
-        const resetAudioBtn = document.getElementById('resetAudioBtn');
+            // --- File uploads ---
+            const ringtoneInput = document.getElementById('ringtoneUpload');
+            const callAudioInput = document.getElementById('callAudioUpload');
+            const ringtoneFileNameSpan = document.getElementById('ringtoneFileName');
+            const callAudioFileNameSpan = document.getElementById('callAudioFileName');
+            const testRingtoneBtn = document.getElementById('testRingtoneBtn');
+            const resetAudioBtn = document.getElementById('resetAudioBtn');
 
-        ringtoneInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
+            ringtoneInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    if (customRingtoneURL) URL.revokeObjectURL(customRingtoneURL);
+                    customRingtoneURL = URL.createObjectURL(file);
+                    ringtoneFileNameSpan.textContent = file.name.length > 16 ? file.name.substring(0, 14) + '…' : file
+                        .name;
+                }
+            });
+            callAudioInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    if (customCallAudioURL) URL.revokeObjectURL(customCallAudioURL);
+                    customCallAudioURL = URL.createObjectURL(file);
+                    callAudioFileNameSpan.textContent = file.name.length > 16 ? file.name.substring(0, 14) + '…' : file
+                        .name;
+                }
+            });
+            testRingtoneBtn.addEventListener('click', () => {
+                if (customRingtoneURL) {
+                    stopTestRingtone();
+                    testRingtoneAudio = new Audio(customRingtoneURL);
+                    testRingtoneAudio.volume = 0.8;
+                    testRingtoneAudio.play().catch(() => alert('Tap the screen first to enable audio'));
+                } else { alert('Upload a ringtone file first (MP3 / WAV).'); }
+            });
+            resetAudioBtn.addEventListener('click', () => {
                 if (customRingtoneURL) URL.revokeObjectURL(customRingtoneURL);
-                customRingtoneURL = URL.createObjectURL(file);
-                ringtoneFileNameSpan.textContent = file.name.length > 16 ? file.name.substring(0, 14) + '…' : file.name;
-            }
-        });
-        callAudioInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
                 if (customCallAudioURL) URL.revokeObjectURL(customCallAudioURL);
-                customCallAudioURL = URL.createObjectURL(file);
-                callAudioFileNameSpan.textContent = file.name.length > 16 ? file.name.substring(0, 14) + '…' : file.name;
+                customRingtoneURL = null;
+                customCallAudioURL = null;
+                ringtoneInput.value = '';
+                callAudioInput.value = '';
+                ringtoneFileNameSpan.textContent = 'No custom ringtone';
+                callAudioFileNameSpan.textContent = 'No call audio';
+                stopCustomRingtone();
+                stopCallAudio();
+            });
+
+            // --- Primary controls ---
+            document.getElementById('dialCallBtn').addEventListener('click', () => { if (currentNumber.length) makeCall(
+                    currentNumber); });
+
+            // Ensure the accept button works
+            acceptCallBtn.addEventListener('click', acceptCall);
+            declineCallBtn.addEventListener('click', endCall);
+            endCallBtn.addEventListener('click', endCall);
+
+            // --- Active call toggles ---
+            muteBtn.addEventListener('click', function() {
+                if (!window.isCallActive) return;
+                isCallAudioMuted = !isCallAudioMuted;
+                this.classList.toggle('engaged', isCallAudioMuted);
+                if (callAudioPlayer) callAudioPlayer.muted = isCallAudioMuted;
+                this.querySelector('div:first-child').textContent = isCallAudioMuted ? '🔇' : '🎤';
+                vibrate(10);
+            });
+
+            speakerBtn.addEventListener('click', function() {
+                if (!window.isCallActive) return;
+                isSpeakerOn = !isSpeakerOn;
+                this.classList.toggle('engaged', isSpeakerOn);
+                if (callAudioPlayer) callAudioPlayer.volume = isSpeakerOn ? 1.0 : 0.55;
+                if (ringtoneAudio) ringtoneAudio.volume = isSpeakerOn ? 1.0 : 0.7;
+                this.querySelector('div:first-child').textContent = isSpeakerOn ? '🔊' : '📢';
+                vibrate(10);
+            });
+
+            keypadActiveBtn.addEventListener('click', () => { if (window.isCallActive) alert(
+                    '🔢 DTMF Keypad (Demo)'); });
+
+            // --- Tabs ---
+            document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => { switchTab(tab.dataset
+                    .tab);
+                vibrate(8); }));
+
+            // ============================================================
+            //  CLOCK
+            // ============================================================
+            function updateTime() {
+                const now = new Date();
+                let h = now.getHours(),
+                    m = now.getMinutes();
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12 || 12;
+                document.getElementById('time').textContent = `${h}:${String(m).padStart(2,'0')} ${ampm}`;
             }
-        });
-        testRingtoneBtn.addEventListener('click', () => {
-            if (customRingtoneURL) {
-                stopTestRingtone();
-                testRingtoneAudio = new Audio(customRingtoneURL);
-                testRingtoneAudio.volume = 0.8;
-                testRingtoneAudio.play().catch(() => alert('Tap the screen first to enable audio'));
-            } else { alert('Upload a ringtone file first (MP3 / WAV).'); }
-        });
-        resetAudioBtn.addEventListener('click', () => {
-            if (customRingtoneURL) URL.revokeObjectURL(customRingtoneURL);
-            if (customCallAudioURL) URL.revokeObjectURL(customCallAudioURL);
-            customRingtoneURL = null;
-            customCallAudioURL = null;
-            ringtoneInput.value = '';
-            callAudioInput.value = '';
-            ringtoneFileNameSpan.textContent = 'No custom ringtone';
-            callAudioFileNameSpan.textContent = 'No call audio';
-            stopCustomRingtone();
-            stopCallAudio();
-        });
+            updateTime();
+            setInterval(updateTime, 1000);
 
-        // --- Primary controls ---
-        document.getElementById('dialCallBtn').addEventListener('click', () => { if (currentNumber.length) makeCall(
-                currentNumber); });
-        document.getElementById('acceptCallBtn').addEventListener('click', acceptCall);
-        document.getElementById('declineCallBtn').addEventListener('click', endCall);
-        document.getElementById('endCallBtn').addEventListener('click', endCall);
+            // ============================================================
+            //  INIT
+            // ============================================================
+            document.body.addEventListener('touchstart', () => initDTMF(), { once: true });
+            updateNumberDisplay();
+            updateRecentsList();
+            updateContactsList();
+            switchTab('keypad');
 
-        // --- Active call toggles ---
-        document.getElementById('muteActiveBtn').addEventListener('click', function() {
-            if (!window.isCallActive) return;
-            isCallAudioMuted = !isCallAudioMuted;
-            this.classList.toggle('engaged', isCallAudioMuted);
-            if (callAudioPlayer) callAudioPlayer.muted = isCallAudioMuted;
-            vibrate(10);
-        });
+            // Seed with sample recents
+            addToRecents('Michael Chen', '+1 (415) 555-0123', '👨‍💼', 'missed');
+            addToRecents('Mom', '+1 (555) 123-4567', '👩', 'outgoing');
 
-        document.getElementById('speakerActiveBtn').addEventListener('click', function() {
-            if (!window.isCallActive) return;
-            isSpeakerOn = !isSpeakerOn;
-            this.classList.toggle('engaged', isSpeakerOn);
-            if (callAudioPlayer) callAudioPlayer.volume = isSpeakerOn ? 1.0 : 0.55;
-            if (ringtoneAudio) ringtoneAudio.volume = isSpeakerOn ? 1.0 : 0.7;
-            vibrate(10);
-        });
+            // For debugging – expose state to console if needed
+            console.log('Phone Pro ready – tap a contact or dial to call.');
 
-        document.getElementById('keypadActiveBtn').addEventListener('click', () => { if (window.isCallActive) alert(
-                '🔢 DTMF Keypad (Demo)'); });
-
-        // --- Tabs ---
-        document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => { switchTab(tab.dataset.tab);
-            vibrate(8); }));
-
-        // ============================================================
-        //  CLOCK
-        // ============================================================
-        function updateTime() {
-            const now = new Date();
-            let h = now.getHours(),
-                m = now.getMinutes();
-            const ampm = h >= 12 ? 'PM' : 'AM';
-            h = h % 12 || 12;
-            document.getElementById('time').textContent = `${h}:${String(m).padStart(2,'0')} ${ampm}`;
-        }
-        updateTime();
-        setInterval(updateTime, 1000);
-
-        // ============================================================
-        //  INIT
-        // ============================================================
-        document.body.addEventListener('touchstart', () => initDTMF(), { once: true });
-        updateNumberDisplay();
-        updateRecentsList();
-        updateContactsList();
-        switchTab('keypad');
-
-        // Seed with sample recents
-        addToRecents('Michael Chen', '+1 (415) 555-0123', '👨‍💼', 'missed');
-        addToRecents('Mom', '+1 (555) 123-4567', '👩', 'outgoing');
+        })();
     </script>
 
 </body>
