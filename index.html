@@ -727,7 +727,42 @@
         scroll-behavior:auto !important;
       }
     }
-  </style>
+  
+/* keypad compact patch */
+.keypad-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    max-width:320px;
+    margin:0 auto 24px !important;
+}
+.key{
+    width:72px;
+    height:72px;
+    margin:auto;
+}
+.call-button{
+    width:82px !important;
+    height:82px !important;
+    border-radius:50%;
+    background:linear-gradient(135deg,#34c759 0%,#28a745 100%) !important;
+    border:3px solid rgba(255,255,255,.15);
+    box-shadow:0 0 25px rgba(52,199,89,.45),0 8px 20px rgba(0,0,0,.35);
+}
+.call-button span{
+    font-size:34px !important;
+    filter:none !important;
+}
+.number-display{
+    max-width:340px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.entered-number{
+    min-height:56px;
+}
+
+</style>
 </head>
 <body>
   <div class="iphone">
